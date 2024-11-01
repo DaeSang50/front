@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css">
     <title>result</title>
+    <style>
+        #result {
+            white-space: pre-line; /* 줄바꿈을 적용 */
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -28,7 +33,7 @@
         const params = new URLSearchParams(window.location.search);
         const address = params.get('address');
         document.getElementById('result').textContent = address 
-            ? `"${address}"이 주소는 신고된 내역이 습니다.`
+            ? `"${address}"\n이 주소는 신고된 내역이 습니다.`
             : '매물 주소가 제공되지 않았습니다.';
     </script>
 </body>
