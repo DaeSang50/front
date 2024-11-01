@@ -35,6 +35,7 @@ header a {
     padding: 10px 15px; /* 메뉴 항목 패딩 */
     border-radius: 5px; /* 모서리 둥글게 */
     transition: background-color 0.3s; /* 부드러운 배경색 변경 */
+    font-size: 20px;
 }
 
 .navbar a:hover {
