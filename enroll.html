@@ -187,49 +187,53 @@
         function toggleAccountInfo() {
             const checkbox = document.getElementById('unknown-account');
             const accountDetails = document.getElementById('account-details');
-            if (checkbox.checked) {
-                accountDetails.style.display = 'none'; // 체크 시 숨김
-            } else {
-                accountDetails.style.display = 'block'; // 체크 해제 시 보임
-            }
+            // 체크박스 상태에 따라 계정 정보 표시/숨기기
+            accountDetails.style.display = checkbox.checked ? 'none' : 'block';
         }
-
+    
         function toggleContactInfo() {
             const checkbox = document.getElementById('unknown-contact');
             const contactDetails = document.getElementById('contact-details');
-            if (checkbox.checked) {
-                contactDetails.style.display = 'none'; // 체크 시 숨김
-            } else {
-                contactDetails.style.display = 'block'; // 체크 해제 시 보임
-            }
+            // 체크박스 상태에 따라 연락처 정보 표시/숨기기
+            contactDetails.style.display = checkbox.checked ? 'none' : 'block';
         }
-
+    
         function searchAddress() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                document.getElementById('zipcode').value = data.zonecode; // 우편번호 입력
-                document.getElementById('road-address').value = data.roadAddress; // 도로명주소 입력
-            }
-          }).open();
+            // Daum 우편번호 검색 API를 호출
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 검색 결과로 도로명 주소와 우편번호 입력
+                    document.getElementById('zipcode').value = data.zonecode; // 우편번호 입력
+                    document.getElementById('road-address').value = data.roadAddress; // 도로명주소 입력
+                }
+            }).open();
+            // 매물 주소 가져오기
+            const address = document.getElementById('address').value.trim(); // 주소 입력값 공백 제거
         }
-
+    
         function submitForm() {
             // 사건 개요 진술서 내용 가져오기
-            const description = document.getElementById('description').value;
-
+            const description = document.getElementById('description').value.trim(); // 입력값 공백 제거
+    
+            // 빈 입력값 체크
+            if (!description) {
+                alert('사건 개요를 입력해 주세요.'); // 입력이 없을 경우 알림
+                return; // 함수 종료
+            }
+    
             // localStorage에서 기존 신고 목록을 불러오기 (없다면 빈 배열로 초기화)
             let caseList = JSON.parse(localStorage.getItem('caseList') || '[]');
-
+    
             // 새로 입력된 사건 개요 추가
             caseList.push(description);
-
+    
             // 업데이트된 리스트를 localStorage에 저장
             localStorage.setItem('caseList', JSON.stringify(caseList));
-
+    
             // 결과 페이지로 이동
             window.location.href = 'result.html';
         }
-      </script>
+    </script>
     </main>
 </body>
 </html>

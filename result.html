@@ -36,22 +36,44 @@
     </div>
 
     <script>
-        // URL 파라미터에서 address 값을 가져와 표시
-        const params = new URLSearchParams(window.location.search);
-        const address = params.get('address');
-        document.getElementById('result').textContent = address 
-            ? `"${address}"\n이 주소는 신고된 내역이 습니다.`
-            : '매물 주소가 제공되지 않았습니다.';
-
         // localStorage에서 사건 개요 리스트 가져오기
         const caseListArray = JSON.parse(localStorage.getItem('caseList') || '[]');
-
+    
+        // 주소와 설명을 포함하는 객체를 처리하는 함수
+        const extractAddressAndDescription = (item) => {
+            // 객체인 경우 주소와 설명을 추출
+            if (typeof item === 'object' && item !== null) {
+                return {
+                    address: item.address || item.roadAddress || '주소 정보가 없습니다.',
+                    description: item.description || '설명이 없습니다.'
+                };
+            }
+            // 객체가 아닌 경우는 그냥 설명으로 사용
+            return {
+                address: '주소 정보가 없습니다.',
+                description: item
+            };
+        };
+    
         // 사건 개요 리스트를 HTML에 표시
         const caseListElement = document.getElementById('case-list');
         if (caseListArray.length > 0) {
-            caseListArray.forEach((description, index) => {
+            caseListArray.forEach((item, index) => {
+                const { address, description } = extractAddressAndDescription(item);
+    
                 const listItem = document.createElement('li');
-                listItem.textContent = `${index + 1} - ${description}`;
+                listItem.textContent = `${index + 1} - ${description} (${address})`;
+                // 클릭 이벤트 추가
+                listItem.addEventListener('click', () => {
+                    // 새 창에서 매물 주소와 리뷰 내용 표시
+                    const newWindow = window.open('', '_blank');
+                    newWindow.document.write(`
+                        <h2>매물 주소: ${address}</h2>
+                        <p>리뷰 내용: ${description}</p>
+                        <button onclick="window.close()">닫기</button>
+                    `);
+                    newWindow.document.close(); // 문서 닫기
+                });
                 caseListElement.appendChild(listItem);
             });
         } else {
@@ -61,5 +83,8 @@
             caseListElement.appendChild(noDataItem);
         }
     </script>
+    
+    
+    
 </body>
 </html>
