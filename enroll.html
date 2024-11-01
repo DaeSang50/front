@@ -26,47 +26,59 @@
         <h2>신고 매물 정보</h2>
 
         <div class="form-group">
-            <label for="account-info">계좌정보
+          <label for="account-holder">매물 주소
+            <span class="required">*</span>
+          </label>
+          <input type="text" id="account-holder" name="account_holder" placeholder="신고할 매물의 주소를 입력하세요." required>
+      </div>
+
+        <div class="form-group">
+            <label for="account-info">계좌 정보
               <span class="required">*</span>
             </label>
-            <input type="checkbox" id="unknown-account" name="unknown_account"> 계좌를 모르는 경우에만 체크하세요.
+            <input type="checkbox" id="unknown-account" name="unknown_account" onclick="toggleAccountInfo()"> 계좌를 모르는 경우에만 체크하세요.
+        </div>
+        <div id="account-details">
+          <div class="form-group">
+              <label for="bank-name">은행명 <span class="required">*</span></label>
+              <select id="bank-name" name="bank_name" required>
+                  <option value="">은행선택(가나다순)</option>
+                  <option value="bank1">부산은행</option>
+                  <option value="bank2">국민은행</option>
+                  <option value="bank3">농협은행</option>
+                  <option value="bank4">기업은행</option>
+              </select>
+          </div>
+
+          <div class="form-group">
+              <label for="account-holder">명의자 성명
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="account-holder" name="account_holder" placeholder="계좌 명의자명을 입력하세요." required>
+          </div>
+
+          <div class="form-group">
+              <label for="account-number">계좌 번호
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="account-number" name="account_number" placeholder="계좌번호를 입력하세요." required>
+          </div>
         </div>
 
         <div class="form-group">
-            <label for="bank-name">은행명 <span class="required">*</span></label>
-            <select id="bank-name" name="bank_name" required>
-                <option value="">은행선택(가나다순)</option>
-                <option value="bank1">부산은행</option>
-                <option value="bank2">국민은행</option>
-                <option value="bank3">농협은행</option>
-                <option value="bank4">기업은행</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="account-holder">명의자 성명
+            <label for="contact-info">연락처 정보
               <span class="required">*</span>
             </label>
-            <input type="text" id="account-holder" name="account_holder" placeholder="계좌 명의자명을 입력하세요." required>
+            <input type="checkbox" id="unknown-contact" name="unknown_contact" onclick="toggleContactInfo()"> 연락처를 모르는 경우에만 체크하세요.
         </div>
 
-        <div class="form-group">
-            <label for="account-number">계좌 번호
-              <span class="required">*</span>
-            </label>
-            <input type="text" id="account-number" name="account_number" placeholder="계좌번호를 입력하세요." required>
-        </div>
-
-        <div class="form-group">
-            <label for="contact-info">연락처 정보 <span class="required">*</span></label>
-            <input type="checkbox" id="unknown-contact" name="unknown_contact"> 연락처를 모르는 경우에만 체크하세요.
-        </div>
-
-        <div class="form-group">
-            <label for="contact">연락처
-              <span class="required">*</span>
-            </label>
-            <input type="text" id="contact" name="contact" placeholder="연락처를 입력하세요." required>
+        <div id="contact-details">
+          <div class="form-group">
+              <label for="contact">연락처
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="contact" name="contact" placeholder="연락처를 입력하세요." required>
+          </div>
         </div>
 
         <div class="form-group">
@@ -148,6 +160,28 @@
 
         <button type="submit">제출</button>
       </div>
+      
+      <script>
+        function toggleAccountInfo() {
+            const checkbox = document.getElementById('unknown-account');
+            const accountDetails = document.getElementById('account-details');
+            if (checkbox.checked) {
+                accountDetails.style.display = 'none'; // 체크 시 숨김
+            } else {
+                accountDetails.style.display = 'block'; // 체크 해제 시 보임
+            }
+        }
+
+        function toggleContactInfo() {
+            const checkbox = document.getElementById('unknown-contact');
+            const contactDetails = document.getElementById('contact-details');
+            if (checkbox.checked) {
+                contactDetails.style.display = 'none'; // 체크 시 숨김
+            } else {
+                contactDetails.style.display = 'block'; // 체크 해제 시 보임
+            }
+        }
+      </script>
     </main>
 </body>
 </html>
