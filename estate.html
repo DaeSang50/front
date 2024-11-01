@@ -3,28 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공인중개사 검색</title>
+    <link rel="stylesheet" href="index.css">
+    <title>search</title>
     <!-- Naver Maps API -->
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=1hbczx9ff1"></script>
     <style>
         #map {
-            width: 50%;
-            height: 400px;
-            margin-left: 300px;
-            margin-right: 10px;
+            width: 50%; /* 지도 너비를 50%로 설정 */
+            height: 400px; /* 지도 높이 */
+            margin-left: 300px; /* 왼쪽 벽에서 간격 */
+            margin-right: 10px; /* 오른쪽 여백 */
         }
+        
         #results {
-            width: 40%;
-            height: 400px;
+            width: 40%; /* 결과 리스트 너비를 40%로 설정 */
+            height: 400px; /* 리스트 높이와 일치 */
             padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
+            box-sizing: border-box; /* 패딩을 포함한 박스 모델 설정 */
+            overflow-y: auto; /* 스크롤 가능하도록 설정 */
         }
+
         main {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            margin-top: 20px;
+            display: flex; /* flexbox 사용 */
+            justify-content: center; /* 중앙 정렬 */
+            align-items: flex-start; /* 상단 정렬 */
+            margin-top: 20px; /* 상단 여백 */
         }
     </style>
 </head>
@@ -44,10 +47,14 @@
     </header>
 
     <main>
+        <!-- 지도 영역 -->
         <div id="map"></div>
+        <!-- 검색 결과 리스트 영역 -->
         <div id="results">
             <h3>공인중개사 검색 결과</h3>
-            <ul id="brokerList"></ul>
+            <ul id="brokerList">
+                <!-- JavaScript로 마커와 리스트 항목이 추가될 예정 -->
+            </ul>
         </div>
     </main>
 
@@ -55,43 +62,33 @@
         window.onload = function() {
             // 네이버 지도 초기화
             var mapOptions = {
-                center: new naver.maps.LatLng(35.1595, 129.1280), // 부산 위치
+                center: new naver.maps.LatLng(35.1595, 129.1280), // 부산 위치 예시
                 zoom: 12
             };
             var map = new naver.maps.Map('map', mapOptions);
 
+            // 부경대 공인중개사 검색 데이터 (예시 데이터)
+            //const brokers = [
+                //{ name: "부경대 공인중개사 A", phone: "123-4567", lat: 35.1595, lng: 129.1280 },
+                //{ name: "부경대 공인중개사 B", phone: "234-5678", lat: 35.1620, lng: 129.1300 },
+                //{ name: "부경대 공인중개사 C", phone: "345-6789", lat: 35.1570, lng: 129.1250 },
+            //];
+
             const brokerList = document.getElementById("brokerList");
 
-            // 공공데이터 포털 API를 사용하여 공인중개사 데이터 가져오기
-            const serviceKey = 'ls%2B0Opnwm3RaIC2e9EpjI0DYQoeUWBoP9sF8tX9R2RWi0yefS4M2caWWAQ7vMoS7opTW3F6HzTz0sJiO4PNDTw%3D%3D'; // 공공데이터 포털에서 발급받은 서비스 키
-            const apiUrl = `https://api.example.com/data?serviceKey=${serviceKey}`;
+            brokers.forEach((broker) => {
+                // 마커 추가
+                var marker = new naver.maps.Marker({
+                    position: new naver.maps.LatLng(broker.lat, broker.lng),
+                    map: map,
+                    title: broker.name // 마커에 툴팁 추가
+                });
 
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    data.items.forEach(broker => {
-                        // 공인중개사 위치 데이터가 유효한지 확인 후 마커 추가
-                        if (broker.latitude && broker.longitude) {
-                            var marker = new naver.maps.Marker({
-                                position: new naver.maps.LatLng(broker.latitude, broker.longitude),
-                                map: map,
-                                title: broker.officeName
-                            });
-
-                            // 리스트에 공인중개사 정보 추가
-                            const listItem = document.createElement("li");
-                            listItem.innerHTML = `${broker.officeName} - ${broker.phoneNumber}`;
-                            brokerList.appendChild(listItem);
-
-                            // 마커 클릭 이벤트 추가
-                            naver.maps.Event.addListener(marker, 'click', function() {
-                                map.setCenter(marker.getPosition());
-                                alert(`${broker.officeName}\n전화번호: ${broker.phoneNumber}`);
-                            });
-                        }
-                    });
-                })
-                .catch(error => console.error('API 요청 실패:', error));
+                // 리스트에 공인중개사 정보 추가
+                const listItem = document.createElement("li");
+                listItem.innerHTML = `${broker.name} - ${broker.phone}`;
+                brokerList.appendChild(listItem);
+            });
         };
     </script>
 </body>
