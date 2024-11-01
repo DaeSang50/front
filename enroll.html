@@ -187,20 +187,26 @@
         function toggleAccountInfo() {
             const checkbox = document.getElementById('unknown-account');
             const accountDetails = document.getElementById('account-details');
+            const requiredFields = accountDetails.querySelectorAll('[required]');
             if (checkbox.checked) {
                 accountDetails.style.display = 'none'; // 체크 시 숨김
+                requiredFields.forEach(field => field.removeAttribute('required')); // 필수 조건 해제
             } else {
                 accountDetails.style.display = 'block'; // 체크 해제 시 보임
+                requiredFields.forEach(field => field.setAttribute('required', 'true')); // 필수 조건 추가
             }
         }
 
         function toggleContactInfo() {
             const checkbox = document.getElementById('unknown-contact');
             const contactDetails = document.getElementById('contact-details');
+            const requiredFields = contactDetails.querySelectorAll('[required]');
             if (checkbox.checked) {
                 contactDetails.style.display = 'none'; // 체크 시 숨김
+                requiredFields.forEach(field => field.removeAttribute('required')); // 필수 조건 해제
             } else {
                 contactDetails.style.display = 'block'; // 체크 해제 시 보임
+                requiredFields.forEach(field => field.setAttribute('required', 'true')); // 필수 조건 추가
             }
         }
 
@@ -214,6 +220,24 @@
         }
 
         function submitForm() {
+            // 필수 항목 검사
+            const requiredFields = document.querySelectorAll('[required]');
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    alert("필수 항목을 모두 기재해야 합니다.");
+                    field.focus(); // 첫 번째 빈 필드로 포커스 이동
+                    return;
+                }
+            }
+
+            // 필수 약관 동의 체크 확인
+            const agreementCheckbox = document.getElementById('agreement');
+            if (!agreementCheckbox.checked) {
+                alert("약관 동의 후 제출 가능합니다.");
+                agreementCheckbox.focus(); // 약관 동의 체크박스에 포커스 이동
+                return;
+            }
+
             // 사건 개요 진술서 내용 가져오기
             const description = document.getElementById('description').value;
 
