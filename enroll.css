@@ -42,6 +42,20 @@
   border-radius: 5px;
 }
 
+.form-group input {
+  margin-top: 3px;
+  height: 35px;
+}
+
 label {
   margin-top: 15px;
+}
+
+.select-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-group input[type="checkbox"] {
+  margin-right: 5px; /* 체크박스와 텍스트 사이의 간격을 조정합니다 */
 }
