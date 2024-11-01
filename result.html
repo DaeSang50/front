@@ -40,15 +40,22 @@
             ? `"${address}"\n이 주소는 신고된 내역이 습니다.`
             : '매물 주소가 제공되지 않았습니다.';
 
-        // sessionStorage에서 사건 개요 내용 가져오기
-        const caseDescription = sessionStorage.getItem('caseDescription');
+        // localStorage에서 사건 개요 리스트 가져오기
+        const caseListArray = JSON.parse(localStorage.getItem('caseList') || '[]');
 
-        // 내용이 있을 경우 리스트 형태로 표시
-        if (caseDescription) {
-            const caseList = document.getElementById('case-list');
-            const listItem = document.createElement('li');
-            listItem.textContent = caseDescription;
-            caseList.appendChild(listItem);
+        // 사건 개요 리스트를 HTML에 표시
+        const caseListElement = document.getElementById('case-list');
+        if (caseListArray.length > 0) {
+            caseListArray.forEach((description, index) => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${index + 1} - ${description}`;
+                caseListElement.appendChild(listItem);
+            });
+        } else {
+            // 저장된 사건 개요가 없을 경우
+            const noDataItem = document.createElement('li');
+            noDataItem.textContent = '저장된 사건 개요가 없습니다.';
+            caseListElement.appendChild(noDataItem);
         }
     </script>
 </body>

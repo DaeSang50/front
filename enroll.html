@@ -188,8 +188,14 @@
             // 사건 개요 진술서 내용 가져오기
             const description = document.getElementById('description').value;
 
-            // sessionStorage에 저장
-            sessionStorage.setItem('caseDescription', description);
+            // localStorage에서 기존 신고 목록을 불러오기 (없다면 빈 배열로 초기화)
+            let caseList = JSON.parse(localStorage.getItem('caseList') || '[]');
+
+            // 새로 입력된 사건 개요 추가
+            caseList.push(description);
+
+            // 업데이트된 리스트를 localStorage에 저장
+            localStorage.setItem('caseList', JSON.stringify(caseList));
 
             // 결과 페이지로 이동
             window.location.href = 'result.html';
