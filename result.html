@@ -62,7 +62,7 @@
                 const { address, description } = extractAddressAndDescription(item);
     
                 const listItem = document.createElement('li');
-                listItem.textContent = `${index + 1} - ${description} (${address})`;
+                listItem.textContent = `${index + 1} - ${description}`;
                 // 클릭 이벤트 추가
                 listItem.addEventListener('click', () => {
                     // 새 창에서 매물 주소와 리뷰 내용 표시
@@ -83,7 +83,6 @@
             caseListElement.appendChild(noDataItem);
         }
     </script>
-    
     
     
 </body>
