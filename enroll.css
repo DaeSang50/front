@@ -59,3 +59,9 @@ label {
 .form-group input[type="checkbox"] {
   margin-right: 5px; /* 체크박스와 텍스트 사이의 간격을 조정합니다 */
 }
+
+#description {
+  width: 543px;
+  height: 145px;
+  border: 1px solid #ddd;
+}
