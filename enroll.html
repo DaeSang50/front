@@ -30,16 +30,23 @@
 
           <div class="form-group">
             <label for="account-holder">매물 주소
-              <span class="required">*</span>
+                <span class="required">*</span>
             </label>
-            <input type="text" id="account-holder" name="account_holder" placeholder="신고할 매물의 주소를 입력하세요." required>
-        </div>
+            <div style="display: flex; align-items: center;">
+                <input type="text" id="zipcode" name="zipcode" required readonly placeholder="우편번호" style="width: 200px;">
+                <button type="button" onclick="searchAddress()" style="margin-left: 5px;">주소 검색</button>
+            </div>
+            <input type="text" id="road-address" name="road_address" placeholder="도로명주소" readonly>
+            <input type="text" id="detailed-address" name="detailed_address" placeholder="상세주소">
+          </div>
 
-          <div class="form-group">
+          <div class="form-group" id="checkbox-or-radio">
               <label for="account-info">계좌 정보
                 <span class="required">*</span>
               </label>
-              <input type="checkbox" id="unknown-account" name="unknown_account" onclick="toggleAccountInfo()"> 계좌를 모르는 경우에만 체크하세요.
+              <div class="select-group">
+                <input type="checkbox" id="unknown-account" name="unknown_account" onclick="toggleAccountInfo()"> 계좌를 모르는 경우에만 체크하세요.
+              </div>
           </div>
           <div id="account-details">
             <div class="form-group">
@@ -68,11 +75,13 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="checkbox-or-radio">
               <label for="contact-info">연락처 정보
                 <span class="required">*</span>
               </label>
-              <input type="checkbox" id="unknown-contact" name="unknown_contact" onclick="toggleContactInfo()"> 연락처를 모르는 경우에만 체크하세요.
+              <div class="select-group">
+                <input type="checkbox" id="unknown-contact" name="unknown_contact" onclick="toggleContactInfo()"> 연락처를 모르는 경우에만 체크하세요.
+              </div>
           </div>
 
           <div id="contact-details">
@@ -85,10 +94,14 @@
           </div>
 
           <div class="form-group">
-              <label>성별 <span class="required">*</span></label>
-              <input type="radio" id="unknown-gender" name="gender" value="unknown" required> 모름
-              <input type="radio" id="male" name="gender" value="male"> 남자
-              <input type="radio" id="female" name="gender" value="female"> 여자
+              <label>성별
+                <span class="required">*</span>
+              </label>
+              <div class="select-group">
+                <input type="radio" id="unknown-gender" name="gender" value="unknown" required> 모름
+                <input type="radio" id="male" name="gender" value="male"> 남자
+                <input type="radio" id="female" name="gender" value="female"> 여자
+              </div>
           </div>
         </div>
 
@@ -165,6 +178,7 @@
         </div>
       </div>
       
+      <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
       <script>
         function toggleAccountInfo() {
             const checkbox = document.getElementById('unknown-account');
@@ -185,6 +199,15 @@
                 contactDetails.style.display = 'block'; // 체크 해제 시 보임
             }
         }
+
+        function searchAddress() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                document.getElementById('zipcode').value = data.zonecode; // 우편번호 입력
+                document.getElementById('road-address').value = data.roadAddress; // 도로명주소 입력
+            }
+        }).open();
+    }
       </script>
     </main>
 </body>
