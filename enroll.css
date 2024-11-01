@@ -1,0 +1,31 @@
+.terms-container {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 15px;
+  background-color: #f9f9f9;
+  height: 50px;
+  overflow-y: scroll;
+}
+
+.terms-container h3 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.terms-container p {
+  margin: 5px 0;
+  line-height: 1.5;
+}
+
+.agreement {
+  background-color: #e7f3ff;
+  border: 1px solid #bdd7f0;
+  padding: 15px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.agreement label {
+  margin-left: 5px;
+}
