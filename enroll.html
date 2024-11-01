@@ -178,7 +178,7 @@
               <label for="agreement">피해사례 등록 약관에 동의합니다.(필수) <a href="terms.html" target="_blank">세부 보기</a></label>
           </div>
 
-          <button type="submit">제출</button>
+          <button type="button" onclick="submitForm()">제출</button>
         </div>
       </div>
       
@@ -211,6 +211,23 @@
                 document.getElementById('road-address').value = data.roadAddress; // 도로명주소 입력
             }
           }).open();
+        }
+
+        function submitForm() {
+            // 사건 개요 진술서 내용 가져오기
+            const description = document.getElementById('description').value;
+
+            // localStorage에서 기존 신고 목록을 불러오기 (없다면 빈 배열로 초기화)
+            let caseList = JSON.parse(localStorage.getItem('caseList') || '[]');
+
+            // 새로 입력된 사건 개요 추가
+            caseList.push(description);
+
+            // 업데이트된 리스트를 localStorage에 저장
+            localStorage.setItem('caseList', JSON.stringify(caseList));
+
+            // 결과 페이지로 이동
+            window.location.href = 'result.html';
         }
       </script>
     </main>
