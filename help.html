@@ -10,7 +10,9 @@
 </head>
 <body>
     <header>
-        <a href="index.html">logo</a>
+        <a href="index.html">
+            <img src="logo.png" alt="logo" style="height: 50px;">
+        </a>
         <nav class="navbar">
             <ul>
                 <li><a href="index.html">검색</a></li>
@@ -32,31 +34,56 @@
             <label for="address">요청주소:</label>
             <input type="text" id="address" required placeholder="주소를 입력하세요">
 
-            <label for="photo">인증사진:</label>
-            <input type="file" id="photo" accept="image/*" required>
+            <div>
+                <label>
+                    <input type="checkbox" id="photo-checkbox"> 인증사진 제출
+                </label>
+            </div>
+
+            <div id="photo-container" style="display: none;">
+                <label for="photo">인증사진:</label>
+                <input type="file" id="photo" accept="image/*">
+            </div>
 
             <label for="reason">요청사유:</label>
             <textarea id="reason" required placeholder="요청 사유를 입력하세요"></textarea>
 
-            
             <button type="submit">제출하기</button>
         </form>
     </div>
 
     <script>
+        // 체크박스 클릭 시 파일 입력란 보이기/숨기기
+        document.getElementById('photo-checkbox').addEventListener('change', function() {
+            const photoContainer = document.getElementById('photo-container');
+            if (this.checked) {
+                photoContainer.style.display = 'block'; // 체크되면 보이기
+            } else {
+                photoContainer.style.display = 'none'; // 체크 해제되면 숨기기
+                document.getElementById('photo').value = ''; // 파일 선택 초기화
+            }
+        });
+
         // 폼 제출 처리
         document.getElementById('inquiry-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // 기본 제출 동작 방지
+            const isPhotoChecked = document.getElementById('photo-checkbox').checked;
+            const photoInput = document.getElementById('photo').value;
+
+            // 인증사진 체크박스가 체크되어 있으면서 파일이 첨부되지 않았을 경우 경고 메시지 표시
+            if (isPhotoChecked && !photoInput) {
+                alert('인증사진을 첨부해주세요.'); // 경고 메시지
+                event.preventDefault(); // 기본 제출 동작 방지
+                return; // 함수 종료
+            }
         
             // 여기에 실제 제출 로직 추가
             // 예를 들어, 폼 데이터 전송 또는 AJAX 요청 등
-    
+
             // 폼 데이터 처리 후 인덱스 페이지로 이동
             alert('문의가 제출되었습니다.'); // 제출 후 메시지 표시
             window.location.href = 'index.html'; // 인덱스 페이지로 이동
         });
     </script>
-    
     
 </body>
 </html>
