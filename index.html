@@ -1,10 +1,9 @@
-<!-- 메인이자 검색 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>search</title>
+    <title>매물 조회</title>
 </head>
 <body>
     <header>
@@ -18,10 +17,21 @@
         </ul>
     </nav>
     <div class="container">
-        <h1>허위매물 조회</h1>
-        <label for="property-address">매물 주소를 입력하세요:</label>
-        <input type="text" id="property-address" placeholder="주소를 입력하세요">
-        <button id="search-button">조회</button>
+        <h1>매물 조회</h1>
+        <input type="text" id="property-address" placeholder="매물 주소를 입력하세요">
+        <button id="search-button" onclick="searchProperty()">조회</button>
     </div>
+
+    <script>
+        function searchProperty() {
+            const address = document.getElementById('property-address').value;
+            if (address) {
+                // 매물 주소를 쿼리 파라미터로 전달하며 result.html로 이동
+                window.location.href = `result.html?address=${encodeURIComponent(address)}`;
+            } else {
+                alert("매물 주소를 입력하세요.");
+            }
+        }
+    </script>
 </body>
 </html>

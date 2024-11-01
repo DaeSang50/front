@@ -1,10 +1,9 @@
-<!-- 검색 결괴(조회) -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>licensed</title>
+    <title>조회 결과</title>
 </head>
 <body>
     <header>
@@ -17,5 +16,18 @@
             <li><a href="licensed.html">공인중개사</a></li>
         </ul>
     </nav>
+    <div class="container">
+        <h1>조회 결과</h1>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        // URL 파라미터에서 address 값을 가져와 표시
+        const params = new URLSearchParams(window.location.search);
+        const address = params.get('address');
+        document.getElementById('result').textContent = address 
+            ? `"${address}"이 주소는 신고된 내역이 습니다.`
+            : '매물 주소가 제공되지 않았습니다.';
+    </script>
 </body>
 </html>
