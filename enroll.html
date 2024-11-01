@@ -159,7 +159,7 @@
               <label for="agreement">피해사례 등록 약관에 동의합니다.(필수) <a href="terms.html" target="_blank">세부 보기</a></label>
           </div>
 
-          <button type="submit">제출</button>
+          <button type="button" onclick="submitForm()">제출</button>
         </div>
       </div>
       
@@ -182,6 +182,17 @@
             } else {
                 contactDetails.style.display = 'block'; // 체크 해제 시 보임
             }
+        }
+
+        function submitForm() {
+            // 사건 개요 진술서 내용 가져오기
+            const description = document.getElementById('description').value;
+
+            // sessionStorage에 저장
+            sessionStorage.setItem('caseDescription', description);
+
+            // 결과 페이지로 이동
+            window.location.href = 'result.html';
         }
       </script>
     </main>

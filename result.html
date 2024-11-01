@@ -27,6 +27,10 @@
         <h1>조회 결과</h1>
         <p id="result"></p>
     </div>
+    <div class="container">
+        <h2>사건 개요 리스트</h2>
+        <ul id="case-list"></ul>
+    </div>
 
     <script>
         // URL 파라미터에서 address 값을 가져와 표시
@@ -35,6 +39,17 @@
         document.getElementById('result').textContent = address 
             ? `"${address}"\n이 주소는 신고된 내역이 습니다.`
             : '매물 주소가 제공되지 않았습니다.';
+
+        // sessionStorage에서 사건 개요 내용 가져오기
+        const caseDescription = sessionStorage.getItem('caseDescription');
+
+        // 내용이 있을 경우 리스트 형태로 표시
+        if (caseDescription) {
+            const caseList = document.getElementById('case-list');
+            const listItem = document.createElement('li');
+            listItem.textContent = caseDescription;
+            caseList.appendChild(listItem);
+        }
     </script>
 </body>
 </html>
